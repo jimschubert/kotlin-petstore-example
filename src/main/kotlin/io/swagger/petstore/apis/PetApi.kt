@@ -20,8 +20,8 @@ class PetApi : ApiClient("http://petstore.swagger.io:80/v2") {
             ResponseType.Success -> return (response as Success<*>).data as List<Pet>
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
-            ResponseType.ClientError -> throw kotlin.RuntimeException("Client error")
-            ResponseType.ServerError -> throw kotlin.RuntimeException("Server error")
+            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
         }
     }
 
@@ -38,8 +38,8 @@ class PetApi : ApiClient("http://petstore.swagger.io:80/v2") {
             ResponseType.Success -> return (response as Success<*>).data as Pet
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
-            ResponseType.ClientError -> throw kotlin.RuntimeException("Client error")
-            ResponseType.ServerError -> throw kotlin.RuntimeException("Server error")
+            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
         }
     }
 }
